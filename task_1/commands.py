@@ -1,4 +1,5 @@
 from exception_handler import exception_handler
+import argparse
 from db import cats
 
 # creates a new cat with name, age, and features parameters
@@ -57,23 +58,39 @@ def delete_all():
     cats.delete_many({})
     return "All cats deleted from database."
 
+def update_command(args):
+    parser = argparse.ArgumentParser(prog="update", description="Update a cat")
+    parser.add_argument("name", help="Name of the cat to update")
+    parser.add_argument("age", type=int, help="New age of the cat")
+    parser.add_argument("features", nargs="*", help="List of features")
+
+    try:
+        parsed_args = parser.parse_args(args)
+    except SystemExit:
+        return "Invalid arguments. Usage: update <name> <age> [features ...]"
+
+    kwargs = {"age": parsed_args.age}
+    if parsed_args.features:
+        kwargs["features"] = parsed_args.features
+
+    return update_cat(name=parsed_args.name, **kwargs)
+
 COMMANDS = {
     "create": lambda args:
     create_cat(args[0], int(args[1]), args[2:])
-    if len(args) >= 2 else "Usage: create -name -age -features:[ .. ]",
+    if len(args) >= 2 else "Usage: create <name> <age> [features ...]",
 
     "read": lambda args:
-    read_cat(args[0]) if args else "Usage: read -name",
+    read_cat(args[0]) if args else "Usage: read <name>",
     
     "read_all": lambda args: read_all(),
 
-    "update": lambda args:
-    update_cat(args[0], args[1], args[2:])
-    if len(args) >= 2 else "Usage: update -name -age optional: -features:[ .. ]",
+    "update": update_command,
+
     
     "delete": lambda args:
     delete_cat(args[0])
-    if args else "Usage: delete -name",
+    if args else "Usage: delete <name>",
     
     "delete_all": lambda args: delete_all()
 }

@@ -1,16 +1,14 @@
-[project]
-name = "goit-ds-hw-03_task-1"
+[tool.poetry]
+name = "goit-ds-hw-03-task-1"
 version = "0.1.0"
 description = "Simple cat database management system using PyMongo to interact with a MongoDB database."
-authors = [
-    {name = "Sviatozar Matiash",email = "sviatozar123@gmail.com"}
-]
+authors = ["Sviatozar Matiash <sviatozar123@gmail.com>"]
 readme = "README.md"
-requires-python = "3.10.11"
-dependencies = [
-    "pymongo (==4.13.2)"
-]
+packages = [{ include = "your_module_name" }]  # заміни на назву каталогу з кодом
 
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11"
+pymongo = "==4.13.2"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

@@ -1,0 +1,22 @@
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb-container
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build: .
+    container_name: catsdb-cli
+    depends_on: 
+      - mongo
+    stdin_open: true
+    tty: true
+    volumes: 
+      - .:/app
+    working_dir: /app
+    command: ['poetry', 'run', 'python', 'main.py']
+volumes:
+  mongo-data:

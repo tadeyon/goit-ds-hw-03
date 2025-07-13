@@ -1,8 +1,10 @@
-from pymongo import MongoClient, errors as PyMongoError
+from pymongo import MongoClient
+from pymongo.errors import PyMongoError
 
 def get_db():
     try:
-        client = MongoClient("mongodb://localhost:27017/", serverSelectionTimeoutMS=1000, connect=True)
+        client = MongoClient("mongodb://mongodb-container:27017/", serverSelectionTimeoutMS=1000, connect=True)
+        client.server_info()
         db = client['cats_database']
         cats = db['cats']
         return cats
