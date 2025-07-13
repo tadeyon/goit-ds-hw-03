@@ -8,7 +8,9 @@ def dump_data(filename: str, data: dict):
 
 if __name__ == "__main__":
     try:
-        db.quotes.create_index("text", unique=True)
+        quotes_data, authors_data = parse_data()
+
+        db.quotes.create_index("text", unique=True)        
         db.authors.create_index("fullname", unique=True)
 
 

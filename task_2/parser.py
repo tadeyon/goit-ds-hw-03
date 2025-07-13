@@ -23,7 +23,7 @@ def parse_data():
                 })
             author_link = quote.find('a')['href']
             author_links.append(author_link)
-            author_links = list(set(author_links))
+        author_links = list(set(author_links))
         
         for author_link in author_links:
             author_response = requests.get(url + author_link)

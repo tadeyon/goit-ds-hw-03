@@ -1,4 +1,5 @@
-from pymongo import MongoClient, errors as PyMongoError
+from pymongo import MongoClient
+from pymongo.errors import PyMongoError
 
 def get_db():
     try:
